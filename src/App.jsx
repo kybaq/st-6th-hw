@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import List from "./components/List";
 
 // TODO: 콘솔창을 확인해보고 input 타이핑할 때 마다
 //       List 컴포넌트가 불필요하게 리렌더링되지 않게 useMemo 사용해서 해결해 보세요.
+// useMemo: 첫 인수로는 함수가 들어감. 특정 요소를 다루는 함수를 실행시키도록 만들어주고 의존성 배열 명시하면 됨.
 
 const App = () => {
   const [input, setInput] = useState("");
@@ -17,8 +18,9 @@ const App = () => {
     setInput("");
   };
 
-  const filteredItems = items.filter((item) =>
-    item.toLocaleLowerCase().includes("item"),
+  const filteredItems = useMemo(
+    () => items.filter((item) => item.toLocaleLowerCase().includes("item")),
+    [items]
   );
 
   return (
